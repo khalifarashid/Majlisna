@@ -31,9 +31,11 @@ Every AI feature traces back to a theme from our systematic literature review (P
 
 AI never approves anything; the majlis team decides every request. Residents can switch personalisation off, and then their interests are never used or sent.
 
-### Turning on real AI
+### Demo AI (default) and optional Claude
 
-GitHub Pages has no server, so the site cannot hold an API key. Each viewer adds their own **Anthropic API key** in **Settings**. The key is stored only in that browser's `localStorage` and sent only to `api.anthropic.com`. Without a key, every AI feature still works with clearly labelled scripted answers.
+Out of the box, every AI feature runs on the built-in **demo AI** (`src/ai/demo.ts`): rules and prepared answers computed from the app's live data, labelled "AI demo". The assistant understands common questions in English and Arabic (prices by category, guest capacity, a named majlis, events by topic or weekend, payments and refunds, request status, verification, privacy) and replies in the language it was asked in.
+
+Optionally, a viewer can add their own **Anthropic API key** in **Settings** to switch to real Claude answers. GitHub Pages has no server, so the key is stored only in that browser's `localStorage` and sent only to `api.anthropic.com`.
 
 - Model: `claude-opus-5-5`, with server-side refusal fallback enabled.
 - The Anthropic SDK is loaded only after a key is added, so visitors without one never download it.

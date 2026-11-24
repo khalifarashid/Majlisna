@@ -1,10 +1,12 @@
 import { Sparkles } from 'lucide-react';
-import { Link } from 'react-router';
 import { useI18n } from '../i18n/I18nProvider';
 import type { L10n } from '../domain/types';
 import { cx } from './ui';
 
-/** Honest label on every AI surface: which engine answered, and which SLR theme the feature comes from. */
+/**
+ * Label on every AI surface: which engine answered, and which SLR theme the feature comes from.
+ * Without a Claude key the prototype runs its built-in demo AI (rules and prepared answers).
+ */
 export function AiBadge({ source, theme, loading, className, dark }: { source?: 'claude' | 'fallback'; theme: L10n; loading?: boolean; className?: string; dark?: boolean }) {
   const { t, L } = useI18n();
   return (
@@ -16,14 +18,9 @@ export function AiBadge({ source, theme, loading, className, dark }: { source?: 
         )}
       >
         <Sparkles className={cx('size-3', loading && 'animate-pulse')} />
-        {loading ? t('Thinking…', 'يفكر…') : source === 'claude' ? 'Claude' : t('Scripted demo', 'ردود مبرمجة')}
+        {loading ? t('Thinking…', 'يفكر…') : source === 'claude' ? 'Claude' : t('AI demo', 'ذكاء تجريبي')}
       </span>
       <span className={dark ? 'text-majlis-200' : 'text-gypsum-500'}>{L(theme)}</span>
-      {source === 'fallback' && !loading && (
-        <Link to="/settings" className={cx('underline underline-offset-2', dark ? 'text-dallah-200' : 'text-majlis-600')}>
-          {t('Turn on Claude', 'فعّل Claude')}
-        </Link>
-      )}
     </div>
   );
 }

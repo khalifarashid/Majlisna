@@ -53,14 +53,14 @@ export function SettingsPage() {
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-2">
             <KeyRound className="size-5 text-dallah-600" />
-            <p className="font-semibold text-majlis-950">{t('Claude AI', 'ذكاء Claude')}</p>
+            <p className="font-semibold text-majlis-950">{t('Claude AI (optional)', 'ذكاء Claude (اختياري)')}</p>
           </div>
-          <Badge tone={has ? 'green' : 'grey'}>{has ? t('On', 'مفعّل') : t('Scripted replies', 'ردود مبرمجة')}</Badge>
+          <Badge tone={has ? 'green' : 'grey'}>{has ? t('Claude on', 'Claude مفعّل') : t('Demo AI on', 'الذكاء التجريبي مفعّل')}</Badge>
         </div>
         <p className="mt-2 text-sm leading-relaxed text-gypsum-600">
           {t(
-            'This site has no server, so real AI needs your own Anthropic API key. It is stored only in this browser and sent only to api.anthropic.com. Without a key, every AI feature still works with scripted answers.',
-            'لا يوجد خادم لهذا الموقع، لذا يحتاج الذكاء الاصطناعي الحقيقي إلى مفتاح Anthropic API خاص بك. يُحفظ في هذا المتصفح فقط ويُرسل إلى api.anthropic.com فقط. بدون مفتاح تعمل كل الميزات بردود مبرمجة.',
+            'The prototype works fully with its built-in demo AI: event picks, the assistant, decor ideas and review insights all run from prepared answers and the app’s live data. If you have an Anthropic API key, you can switch them to real Claude answers. The key stays in this browser and is sent only to api.anthropic.com.',
+            'يعمل النموذج بالكامل بالذكاء التجريبي المدمج: الترشيحات والمساعد وأفكار الديكور وتحليل التقييمات تعمل من إجابات معدّة وبيانات التطبيق الحية. إذا كان لديك مفتاح Anthropic API يمكنك التحويل إلى إجابات Claude الحقيقية. يبقى المفتاح في هذا المتصفح ويُرسل إلى api.anthropic.com فقط.',
           )}
         </p>
         {saved ? (

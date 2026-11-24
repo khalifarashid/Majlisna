@@ -12,10 +12,14 @@ import { LogoMark } from '../../components/Logo';
 import { cx } from '../../components/ui';
 
 const SUGGESTIONS = [
-  { en: 'What’s on this week?', ar: 'ما فعاليات هذا الأسبوع؟' },
   { en: 'How do I request a wedding date?', ar: 'كيف أطلب موعداً للعرس؟' },
-  { en: 'How much do services cost?', ar: 'كم أسعار الخدمات؟' },
   { en: 'Which majlis fits 350 guests?', ar: 'أي مجلس يتسع لـ٣٥٠ ضيفاً؟' },
+  { en: 'How much is Al Ayyala?', ar: 'كم سعر العيالة؟' },
+  { en: 'What’s on this weekend?', ar: 'ما فعاليات نهاية الأسبوع؟' },
+  { en: 'Tell me about Majlis Al Sidr', ar: 'أخبرني عن مجلس السدر' },
+  { en: 'What if a vendor cancels?', ar: 'ماذا لو ألغى المورد؟' },
+  { en: 'Any poetry events?', ar: 'هل توجد أمسيات شعرية؟' },
+  { en: 'How much do all services cost?', ar: 'كم تكلفة كل الخدمات؟' },
 ];
 
 export function Assistant() {
@@ -70,7 +74,7 @@ export function Assistant() {
               {t('Ask about majlises, events, services or your request. Arabic or English.', 'اسأل عن المجالس أو الفعاليات أو الخدمات أو طلبك، بالعربية أو الإنجليزية.')}
             </p>
             <div className="mt-5 flex w-full flex-col gap-2">
-              {SUGGESTIONS.map((s) => (
+              {SUGGESTIONS.slice(0, 5).map((s) => (
                 <button key={s.en} onClick={() => void send(lang === 'ar' ? s.ar : s.en)} className="rounded-xl bg-white px-4 py-2.5 text-start text-sm text-majlis-800 ring-1 ring-gypsum-200 transition-colors hover:bg-majlis-50">
                   {lang === 'ar' ? s.ar : s.en}
                 </button>
@@ -108,8 +112,23 @@ export function Assistant() {
         <div ref={end} />
       </div>
 
+      <div className="sticky bottom-24 z-10">
+      {turns.length > 0 && !busy && (
+        <div className="-mx-4 mb-2 flex gap-2 overflow-x-auto px-4 pb-1 no-scrollbar" aria-label={t('Suggested questions', 'أسئلة مقترحة')}>
+          {SUGGESTIONS.filter((s) => !turns.some((tn) => tn.text === s.en || tn.text === s.ar)).map((s) => (
+            <button
+              key={s.en}
+              onClick={() => void send(lang === 'ar' ? s.ar : s.en)}
+              className="shrink-0 rounded-full bg-white px-3 py-1.5 text-xs font-medium text-majlis-800 ring-1 ring-gypsum-200 transition-colors hover:bg-majlis-50"
+            >
+              {lang === 'ar' ? s.ar : s.en}
+            </button>
+          ))}
+        </div>
+      )}
+
       <form
-        className="sticky bottom-24 flex items-center gap-2 rounded-2xl bg-white p-1.5 shadow-lift ring-1 ring-gypsum-200"
+        className="flex items-center gap-2 rounded-2xl bg-white p-1.5 shadow-lift ring-1 ring-gypsum-200"
         onSubmit={(e) => {
           e.preventDefault();
           void send(draft);
@@ -133,6 +152,7 @@ export function Assistant() {
           </button>
         )}
       </form>
+      </div>
     </div>
   );
 }
