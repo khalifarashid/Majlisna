@@ -1,0 +1,174 @@
+@import 'tailwindcss';
+
+/*
+  Majlisna design tokens
+  - Majlis green and Dallah gold come straight from the Majlisna logo.
+  - Sadu red is the accent of Al Sadu weaving, used sparingly (alerts, the woven band).
+  - Gypsum neutrals: the faintly sage-white of coral-stone and gypsum walls, not cream.
+  - Reem Kufi (display, Arabic + Latin) echoes the geometry of majlis arches; IBM Plex Sans Arabic
+    carries the interface in both scripts; IBM Plex Mono sets ledgers and money.
+*/
+@theme {
+  --font-display: 'Reem Kufi Variable', 'IBM Plex Sans Arabic', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'IBM Plex Sans Arabic', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+
+  --color-majlis-50: #eef4f0;
+  --color-majlis-100: #dbe8e0;
+  --color-majlis-200: #b7d1c1;
+  --color-majlis-300: #8bb39b;
+  --color-majlis-400: #5c9175;
+  --color-majlis-500: #3e7a5d;
+  --color-majlis-600: #2c6449;
+  --color-majlis-700: #22513b;
+  --color-majlis-800: #1b4232;
+  --color-majlis-900: #133226;
+  --color-majlis-950: #0b2119;
+
+  --color-dallah-50: #fbf6ec;
+  --color-dallah-100: #f5ead3;
+  --color-dallah-200: #ebd5a8;
+  --color-dallah-300: #dcb877;
+  --color-dallah-400: #cba054;
+  --color-dallah-500: #b8893a;
+  --color-dallah-600: #9c7030;
+  --color-dallah-700: #7c5727;
+
+  --color-sadu-50: #fbefed;
+  --color-sadu-100: #f5dad6;
+  --color-sadu-500: #b23a2d;
+  --color-sadu-600: #9a2e24;
+  --color-sadu-700: #7d241c;
+
+  --color-gypsum-50: #fbfbf8;
+  --color-gypsum-100: #f4f5f0;
+  --color-gypsum-200: #e8e9e2;
+  --color-gypsum-300: #d4d6cc;
+  --color-gypsum-400: #aeb1a4;
+  --color-gypsum-500: #858a7c;
+  --color-gypsum-600: #62675b;
+  --color-gypsum-700: #474b42;
+  --color-ink: #16211c;
+
+  /* Chart series, validated with the dataviz palette checker (CVD ΔE 9.7, normal ΔE 21.2). */
+  --color-chart-revenue: #1f7a52;
+  --color-chart-cost: #c0802a;
+
+  --shadow-card: 0 1px 0 rgb(22 33 28 / 0.04), 0 10px 30px -18px rgb(22 33 28 / 0.28);
+  --shadow-lift: 0 2px 0 rgb(22 33 28 / 0.04), 0 22px 50px -24px rgb(22 33 28 / 0.4);
+  --shadow-device: 0 40px 80px -40px rgb(11 33 25 / 0.55), 0 0 0 1px rgb(11 33 25 / 0.08);
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --animate-shimmer: shimmer 1.6s linear infinite;
+  @keyframes shimmer {
+    from {
+      background-position: 200% 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
+  }
+}
+
+@layer base {
+  html {
+    background: var(--color-gypsum-100);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    min-height: 100dvh;
+    line-height: 1.55;
+  }
+  [dir='rtl'] body {
+    line-height: 1.75;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-dallah-500);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  ::selection {
+    background: var(--color-dallah-200);
+    color: var(--color-ink);
+  }
+  button {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+  input[type='range'] {
+    accent-color: var(--color-majlis-700);
+  }
+}
+
+@layer components {
+  /* The arch: Majlisna's recurring silhouette, taken from the doorways in the logo. */
+  .arch {
+    border-radius: 50% 50% var(--arch-base, 16px) var(--arch-base, 16px) / var(--arch-rise, 26%) var(--arch-rise, 26%)
+      var(--arch-base, 16px) var(--arch-base, 16px);
+  }
+  .display {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+  /* Reem Kufi's Arabic is too flat at heading sizes; El Messiri keeps Arabic headings legible and calligraphic. */
+  [dir='rtl'] .display {
+    font-family: 'El Messiri Variable', 'IBM Plex Sans Arabic', ui-sans-serif, sans-serif;
+    letter-spacing: 0;
+  }
+  .num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+  .eyebrow {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  [dir='rtl'] .eyebrow {
+    letter-spacing: 0;
+    font-size: 0.8rem;
+  }
+  .scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-gypsum-300) transparent;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .skeleton {
+    background: linear-gradient(90deg, var(--color-gypsum-200) 25%, var(--color-gypsum-100) 50%, var(--color-gypsum-200) 75%);
+    background-size: 200% 100%;
+    animation: var(--animate-shimmer);
+    border-radius: 8px;
+  }
+  .flip-rtl {
+    transform: scaleX(var(--flip, 1));
+  }
+  [dir='rtl'] .flip-rtl {
+    --flip: -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
